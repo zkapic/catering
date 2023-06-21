@@ -23,5 +23,5 @@
             "dest": "catering/wsgi.py"
         }
     ],
-    "outputDirectory": "staticfiles"
+    "outputDirectory": "static"
 }
