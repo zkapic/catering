@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.28",
+    "tailwindcss": "^3.3.3"
+  },
+  "scripts": {
+    "build": "postcss static/main.css -o static/bundle.css"
+  },
+  "dependencies": {
+    "postcss-cli": "^10.1.0"
+  }
+}

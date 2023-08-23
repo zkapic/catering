@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bundle.css' %}">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <!-- Include Bootstrap CSS here -->
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen overflow-hidden">
+    <nav class="bg-white py-4 text-black">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <div>
+                <a href="#" class="text-xl font-semibold">Catering</a>
+            </div>
+            <div>
+                {% if user.is_authenticated %}
+                <a href="#" class="px-4">Home</a>
+                <a href="#" class="px-4">Profile</a>
+                <a href="/logout" class="px-4">Logout</a>
+                {% else %}
+                <a href="#" class="px-4">Home</a>
+                <a href="#" class="px-4">Login</a>
+                <a href="#" class="px-4">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        <div class="flex min-h-screen justify-center items-center">
+            <div class="max-w-md w-full bg-white p-8 rounded shadow">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-200 py-4 text-center sticky bottom-0">
+        <p>&copy; {{ current_year }} Catering. All rights reserved.</p>
+    </footer>
+</body>
+</html>
