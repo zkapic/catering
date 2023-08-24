@@ -23,6 +23,8 @@ urlpatterns = [
     path('', login_view, name='dashboard'),
     path('admin/', admin.site.urls),
     path('users/', include("users.urls")),
+    path('orders/', include("orders.urls")),
+    path('storage/', include("storage.urls")),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('register/', register_view, name='register'),

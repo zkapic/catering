@@ -14,7 +14,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/users')  # Replace with your desired URL after successful login
+            return redirect('/orders')  # Replace with your desired URL after successful login
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'login.html')
@@ -29,7 +29,7 @@ def register_view(request):
             # Log the user in after registration
             login(request, user)
             messages.success(request, 'Registration successful. You are now logged in.')
-            return redirect('/users')  # Replace 'users' with the URL to redirect after successful registration
+            return redirect('/orders')  # Replace 'users' with the URL to redirect after successful registration
         else:
             messages.error(request, 'Registration failed. Please correct the errors below.')
     else:

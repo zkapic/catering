@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+    <div class="w-xl">
+    <div class="flex inline justify-between">
+        <h2 class="text-2xl mb-4">Storage</h2>
+        <a href="{% url 'add' %}" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 mb-4">Add Storage</a>
+    </div>
+    {% if messages %}
+        <div class="text-red-500 mb-4">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <table id="storage-table" class="stripe hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in storage %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                    <!-- Add more columns as needed -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#storage-table').DataTable();
+        });
+    </script>
+{% endblock %}
+
+
+
