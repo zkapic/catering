@@ -6,10 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'bundle.css' %}">
+     <!-- Load jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Load DataTables -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
     <title>{% block title %}My Site{% endblock %}</title>
     <!-- Include Bootstrap CSS here -->
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen overflow-hidden">
+<body class="bg-gray-100 flex flex-col min-h-screen">
     <nav class="bg-white py-4 text-black">
         <div class="container mx-auto flex justify-between items-center px-4">
             <div>
@@ -17,21 +22,26 @@
             </div>
             <div>
                 {% if user.is_authenticated %}
-                <a href="#" class="px-4">Home</a>
-                <a href="#" class="px-4">Profile</a>
-                <a href="/logout" class="px-4">Logout</a>
+                    {% if user.is_staff %}
+                        <a href="#" class="px-4">Orders</a>
+                        <a href="/users" class="px-4">Users</a>
+                        <a href="#" class="px-4">Storage</a>
+                    {% endif %}
+                    {% if not user.is_staff %}
+                        <a href="#" class="px-4">My orders</a>
+                    {% endif %}
+                    <a href="/logout" class="px-4">Logout</a>
                 {% else %}
-                <a href="#" class="px-4">Home</a>
-                <a href="#" class="px-4">Login</a>
-                <a href="#" class="px-4">Register</a>
+                    <a href="/login" class="px-4">Login</a>
+                    <a href="/register" class="px-4">Register</a>
                 {% endif %}
             </div>
         </div>
     </nav>
 
     <main class="flex-grow">
-        <div class="flex min-h-screen justify-center items-center">
-            <div class="max-w-md w-full bg-white p-8 rounded shadow">
+        <div class="flex min-h-screen justify-center mt-4">
+            <div class="max-w-xl w-full bg-white p-5 rounded shadow">
                 {% block content %}
                 {% endblock %}
             </div>
@@ -42,4 +52,5 @@
         <p>&copy; {{ current_year }} Catering. All rights reserved.</p>
     </footer>
 </body>
+
 </html>

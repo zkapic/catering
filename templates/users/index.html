@@ -3,8 +3,39 @@
 {% block title %}Users{% endblock %}
 
 {% block content %}
+    <div class="w-xl">
     <h2 class="text-2xl mb-4">Users</h2>
-    
+    {% if messages %}
+        <div class="text-red-500 mb-4">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <table id="users-table" class="stripe hover">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <!-- Add more columns as needed -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#users-table').DataTable();
+        });
+    </script>
 {% endblock %}
 
 
