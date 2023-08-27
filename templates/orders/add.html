@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Add Order{% endblock %}
+
+{% block content %}
+    <div class="flex flex-col justify-center items-center">
+        <div class="max-w-md w-full bg-white p-8 rounded">
+            <h2 class="text-2xl mb-4">Add Order</h2>
+            <form method="POST" class="space-y-4">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="city" class="text-gray-700">City:</label>
+                    <input type="text" id="city" name="city" class="mt-1 p-2 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                </div>
+                <div class="mb-4">
+                    <label for="location" class="text-gray-700">Location:</label>
+                    <input type="text" id="location" name="location" class="mt-1 p-2 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                </div>
+                <div class="mb-4">
+                    <label for="date" class="text-gray-700">Date:</label>
+                    <input type="datetime-local" id="date" name="date" class="mt-1 p-2 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                </div>
+                <div class="mb-4">
+                    <label for="type" class="text-gray-700">Type:</label>
+                    <select id="type" name="type" class="mt-1 p-2 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="1">Birthday</option>
+                        <option value="2">Wedding</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="guests" class="text-gray-700">Guests:</label>
+                    <input type="number" id="guests" name="guests" class="mt-1 p-2 block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                </div>
+                <div>
+                    <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600">Add Order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

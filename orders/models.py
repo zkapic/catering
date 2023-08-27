@@ -3,14 +3,16 @@ from django.contrib.auth.models import User
 
 class Order(models.Model):
     ORDER_TYPES = (
-        (1, 'Type 1'),
-        (2, 'Type 2'),
+        (1, 'Birthday'),
+        (2, 'Wedding'),
         # Add more types if needed
     )
 
     ORDER_STATUS = (
         (1, 'Pending'),
-        (2, 'Completed'),
+        (2, 'Accepted'),
+        (3, 'Completed'),
+        (3, 'Paid'),
         # Add more status options if needed
     )
 
@@ -18,6 +20,7 @@ class Order(models.Model):
     location = models.CharField(max_length=200)
     date = models.DateTimeField()
     type = models.IntegerField(choices=ORDER_TYPES)
+    guests = models.IntegerField()
     status = models.IntegerField(choices=ORDER_STATUS)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

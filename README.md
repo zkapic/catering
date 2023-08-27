@@ -1,13 +1,25 @@
 # CATERING
 
-# TO DO
-* Datatable for users
-* Add user
-* Edit user
-* Delete user
 
 * Add order
 * Accept order
 * Decline order
+* Edit order
+* Whitdraw order
 
-* Datatable for orders
+* Connect order and storage
+* See free appt
+
+* Storage
+* Add storage
+* Delete storage
+* Edit storage
+
+PAY
+
+SEE FINANCE LIST
+
+STATS
+
+
+

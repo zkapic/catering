@@ -4,7 +4,10 @@
 
 {% block content %}
     <div class="w-xl">
-    <h2 class="text-2xl mb-4">Orders</h2>
+    <div class="flex inline justify-between">
+        <h2 class="text-2xl mb-4">Orders</h2>
+        <a href="{% url 'add_orders' %}" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 mb-4">Add Order</a>
+    </div>
     {% if messages %}
         <div class="text-red-500 mb-4">
             {% for message in messages %}
@@ -17,7 +20,10 @@
             <tr>
                 <th>City</th>
                 <th>Location</th>
-                <!-- Add more columns as needed -->
+                <th>Guest</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +31,19 @@
                 <tr>
                     <td>{{ order.city }}</td>
                     <td>{{ order.location }}</td>
+                    <td>{{ order.guest }}</td>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                    <td>
+                        {% if user.is_staff %}
+                            {% if order.status == 1 %}
+                            <span class="flex inline mr-2">
+                                <a href="{% url 'add_storage' %}" class="bg-green-400 text-white mr-1 px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Approve</a>
+                                <a href="{% url 'add_storage' %}" class="bg-red-400 text-white px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Decline</a>
+                            </span>
+                            {% endif %}
+                        {% endif %}
+                    </td>
                     <!-- Add more columns as needed -->
                 </tr>
             {% endfor %}
