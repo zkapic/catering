@@ -11,4 +11,5 @@ urlpatterns = [
     path('complete/<int:order_id>/', views.complete, name='complete'),
     path('pay/<int:order_id>/', views.pay, name='pay'),
     path('process_payment/<int:order_id>/', views.process_payment, name='process_payment'),
+    path('order_detail/<int:order_id>/', views.order_detail, name='order_detail'),
 ]

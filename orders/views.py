@@ -1,6 +1,10 @@
+import sys
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from .models import Order
+from django.shortcuts import render, redirect, get_object_or_404
+
+from storage.models import Storage
+
+from .models import Order, OrderStorage
 
 @login_required
 def index(request):
@@ -22,10 +26,17 @@ def add(request):
         date = request.POST['date']
         guests = request.POST['guests']
         type = int(request.POST['type'])
+        selected_storage_data = request.POST.getlist('storage_data')
+        quantities = {}  # Dictionary to store storage item quantities
+    
+        for storage_id in selected_storage_data:
+            quantity = request.POST.get(f'quantity_{storage_id}')
+            quantities[storage_id] = int(quantity)
+
         status = 1
         user = request.user
 
-        Order.objects.create(
+        new_order = Order.objects.create(
             city=city,
             location=location,
             date=date,
@@ -35,9 +46,19 @@ def add(request):
             type = type
         )
 
+        for storage_id, quantity in quantities.items():
+            storage = Storage.objects.get(id=storage_id)
+            OrderStorage.objects.create(
+                order=new_order,
+                storage=storage,
+                quantity=quantity
+            )
+
+
         return redirect('orders')  # Redirect to the list of storage items
     
-    return render(request, 'orders/add.html')
+    storage_items = Storage.objects.all()  # Fetch all storage items from the database
+    return render(request, 'orders/add.html', {'storage_items': storage_items})
 
 @login_required
 def approve(request, order_id):
@@ -106,3 +127,13 @@ def pay(request, order_id):
     orders = Order.objects.filter(id=order_id)
 
     return render(request, 'orders/payment.html', {'orders': orders})
+
+@login_required
+def order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    order_storage_items = order.orderstorage_set.all().prefetch_related('storage')
+    
+    return render(request, 'orders/order_detail.html', {
+        'order': order,
+        'order_storage_items': order_storage_items
+    })

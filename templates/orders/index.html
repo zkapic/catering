@@ -29,7 +29,7 @@
         <tbody>
             {% for order in orders %}
                 <tr>
-                    <td>{{ order.city }}</td>
+                    <td><a href="{% url 'order_detail' order.id %}">{{ order.city }}</a></td>
                     <td>{{ order.location }}</td>
                     <td>{{ order.guests }}</td>
                     <td>{{ order.date }}</td>

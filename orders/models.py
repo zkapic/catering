@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from storage.models import Storage  # Import Storage model from the 'storage' app
+
 class Order(models.Model):
     ORDER_TYPES = (
         (1, 'Birthday'),
@@ -26,5 +28,16 @@ class Order(models.Model):
     status = models.IntegerField(choices=ORDER_STATUS)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    storages = models.ManyToManyField(Storage, through='OrderStorage')
+
     def __str__(self):
         return f"Order #{self.id} - {self.city}"
+    
+
+class OrderStorage(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    storage = models.ForeignKey(Storage, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.quantity} x {self.storage.name}"
