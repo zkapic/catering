@@ -9,9 +9,7 @@
 * See free appt
 
 * Storage
-* Add storage
 * Delete storage
-* Edit storage
 
 SEE FINANCE LIST
 
