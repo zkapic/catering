@@ -31,15 +31,32 @@
                 <tr>
                     <td>{{ order.city }}</td>
                     <td>{{ order.location }}</td>
-                    <td>{{ order.guest }}</td>
+                    <td>{{ order.guests }}</td>
                     <td>{{ order.date }}</td>
                     <td>{{ order.get_status_display }}</td>
                     <td>
                         {% if user.is_staff %}
                             {% if order.status == 1 %}
                             <span class="flex inline mr-2">
-                                <a href="{% url 'add_storage' %}" class="bg-green-400 text-white mr-1 px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Approve</a>
-                                <a href="{% url 'add_storage' %}" class="bg-red-400 text-white px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Decline</a>
+                                <a href="{% url 'approve' order.id %}" class="bg-green-400 text-white mr-1 px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Approve</a>
+                                <a href="{% url 'decline' order.id %}" class="bg-red-400 text-white px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Decline</a>
+                            </span>
+                            {% endif %}
+                            {% if order.status == 2 %}
+                            <span class="flex inline mr-2">
+                                <a href="{% url 'complete' order.id %}" class="bg-green-400 text-white mr-1 px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Completed</a>
+                            </span>
+                            {% endif %}
+                        {% endif %}
+                        {% if not user.is_staff %}
+                            {% if order.status == 1 %}
+                            <span class="flex inline mr-2">
+                                <a href="{% url 'whitdraw' order.id %}" class="bg-green-400 text-white mr-1 px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Whitdraw</a>
+                            </span>
+                            {% endif %}
+                            {% if order.status == 5 %}
+                            <span class="flex inline mr-2">
+                                <a href="{% url 'pay' order.id %}" class="bg-green-400 text-white mr-1 px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Pay</a>
                             </span>
                             {% endif %}
                         {% endif %}

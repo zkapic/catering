@@ -2,10 +2,8 @@
 
 
 * Add order
-* Accept order
-* Decline order
 * Edit order
-* Whitdraw order
+* See order
 
 * Connect order and storage
 * See free appt
@@ -14,8 +12,6 @@
 * Add storage
 * Delete storage
 * Edit storage
-
-PAY
 
 SEE FINANCE LIST
 

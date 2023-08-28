@@ -11,8 +11,10 @@ class Order(models.Model):
     ORDER_STATUS = (
         (1, 'Pending'),
         (2, 'Accepted'),
-        (3, 'Completed'),
-        (3, 'Paid'),
+        (3, 'Declined'),
+        (4, 'Whitdraw'),
+        (5, 'Completed'),
+        (6, 'Paid'),
         # Add more status options if needed
     )
 

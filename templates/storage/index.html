@@ -34,7 +34,9 @@
                     <td>{{ item.price }}</td>
                     <td>{{ item.get_type_display }}</td>
                     <td>
-                       
+                        <span class="flex inline mr-2">
+                            <a href="{% url 'edit' item.id %}" class="bg-blue-400 text-white mr-1 px-2 py-2 rounded-md hover:bg-indigo-600 mb-4">Edit</a>
+                        </span>
                     </td>
                     <!-- Add more columns as needed -->
                 </tr>
