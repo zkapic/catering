@@ -23,6 +23,7 @@
             <div>
                 {% if user.is_authenticated %}
                     {% if user.is_staff %}
+                        <a href="/home" class="px-4">Home</a>
                         <a href="/orders" class="px-4">Orders</a>
                         <a href="/users" class="px-4">Users</a>
                         <a href="/storage" class="px-4">Storage</a>
