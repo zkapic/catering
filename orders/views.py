@@ -1,4 +1,7 @@
 import sys
+from rest_framework.decorators import api_view
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -6,7 +9,16 @@ from storage.models import Storage
 
 from .models import Order, OrderStorage
 
+# Swagger documentation for the index view
+@swagger_auto_schema(
+    method='GET',
+    operation_description="Retrieve a list of orders with total prices.",
+    responses={
+        200: openapi.Response(description="List of orders with total prices"),
+    }
+)
 @login_required
+@api_view(['GET'])
 def index(request):
     user = request.user
     if user.is_staff:
@@ -15,10 +27,41 @@ def index(request):
     else:
         # User is not staff, show their own orders
         orders = Order.objects.filter(user=user)
+
+    for order in orders:
+        total_price = 0
+        order_storages = order.orderstorage_set.select_related('storage')
+        for order_storage in order_storages:
+            total_price += order_storage.storage.price * order_storage.quantity
+        order.total_price = total_price
     
     return render(request, 'orders/index.html', {'orders': orders})
 
+
+# Swagger documentation for the add view
+@swagger_auto_schema(
+    method='POST',
+    operation_description="Create a new order with associated storage items.",
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'city': openapi.Schema(type=openapi.TYPE_STRING),
+            'location': openapi.Schema(type=openapi.TYPE_STRING),
+            'date': openapi.Schema(type=openapi.TYPE_STRING, format='date-time'),
+            'guests': openapi.Schema(type=openapi.TYPE_INTEGER),
+            'type': openapi.Schema(type=openapi.TYPE_INTEGER),
+            'storage_data': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.TYPE_INTEGER),
+            'quantities': openapi.Schema(type=openapi.TYPE_OBJECT, additional_properties=openapi.Schema(type=openapi.TYPE_INTEGER)),
+        },
+        required=['city', 'location', 'date', 'guests', 'type', 'storage_data', 'quantities']
+    ),
+    responses={
+        200: "Order created successfully",
+        400: "Bad request data",
+    }
+)
 @login_required
+@api_view(['POST'])
 def add(request):
     if request.method == 'POST':
         city = request.POST['city']
@@ -60,6 +103,17 @@ def add(request):
     storage_items = Storage.objects.all()  # Fetch all storage items from the database
     return render(request, 'orders/add.html', {'storage_items': storage_items})
 
+# Swagger documentation for the approve view
+@swagger_auto_schema(
+    method='POST',
+    operation_description="Approve an order.",
+    responses={
+        200: "Order approved successfully",
+        400: "Bad request data",
+    }
+)
+@login_required
+@api_view(['POST'])
 @login_required
 def approve(request, order_id):
     try:
@@ -72,7 +126,17 @@ def approve(request, order_id):
 
     return redirect('orders')  # Redirect to the list of orders
 
-
+# Swagger documentation for the decline view
+@swagger_auto_schema(
+    method='POST',
+    operation_description="Decline an order.",
+    responses={
+        200: "Order declined successfully",
+        400: "Bad request data",
+    }
+)
+@login_required
+@api_view(['POST'])
 @login_required
 def decline(request, order_id):
     try:
@@ -85,6 +149,17 @@ def decline(request, order_id):
 
     return redirect('orders')  # Redirect to the list of orders
 
+# Swagger documentation for the whitdraw view
+@swagger_auto_schema(
+    method='POST',
+    operation_description="Withdraw an order.",
+    responses={
+        200: "Order withdrawn successfully",
+        400: "Bad request data",
+    }
+)
+@login_required
+@api_view(['POST'])
 @login_required
 def whitdraw(request, order_id):
     try:
@@ -97,7 +172,17 @@ def whitdraw(request, order_id):
 
     return redirect('orders')  # Redirect to the list of orders
 
+# Swagger documentation for the complete view
+@swagger_auto_schema(
+    method='POST',
+    operation_description="Mark an order as complete.",
+    responses={
+        200: "Order marked as complete successfully",
+        400: "Bad request data",
+    }
+)
 @login_required
+@api_view(['POST'])
 def complete(request, order_id):
     try:
         order = Order.objects.get(id=order_id)
@@ -109,7 +194,19 @@ def complete(request, order_id):
 
     return redirect('orders')  # Redirect to the list of orders
 
+# Swagger documentation for the process_payment view
+@swagger_auto_schema(
+    method='POST',
+    operation_description="Process payment for an order.",
+    responses={
+        200: "Payment processed successfully",
+        400: "Invalid input data",
+        404: "Order not found",
+        409: "Order status does not allow payment processing",
+    }
+)
 @login_required
+@api_view(['POST'])
 def process_payment(request, order_id):
     try:
         order = Order.objects.get(id=order_id)
@@ -121,14 +218,34 @@ def process_payment(request, order_id):
 
     return redirect('orders')  # Redirect to the list of orders
 
+# Swagger documentation for the pay view
+@swagger_auto_schema(
+    method='GET',
+    operation_description="Get payment information for an order.",
+    responses={
+        200: "Payment information retrieved successfully",
+        404: "Order not found",
+    }
+)
 @login_required
+@api_view(['GET'])
 def pay(request, order_id):
     user = request.user
     orders = Order.objects.filter(id=order_id)
 
     return render(request, 'orders/payment.html', {'orders': orders})
 
+# Swagger documentation for the order_detail view
+@swagger_auto_schema(
+    method='GET',
+    operation_description="Get details of an order.",
+    responses={
+        200: "Order details retrieved successfully",
+        404: "Order not found",
+    }
+)
 @login_required
+@api_view(['GET'])
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     order_storage_items = order.orderstorage_set.all().prefetch_related('storage')

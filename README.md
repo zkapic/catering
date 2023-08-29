@@ -12,12 +12,33 @@ Tutorials on how to run app:
 * Add .env file and add database credentials
 * Run python manage.py runserver
 
-Application is run on 127.0.0.1:8000. 
+Application is run on 127.0.0.1:8000.
 
-Still in To Do:
+Features:
 
-* Edit order and storage details for order (Admin and User)
-* See free storage before Accepting order (Admin)
+* Login (Validations and Error Messages)
+* Register (Validations and Error Messages)
+* Dashboard statistics (Dummy data)
+* Logout
 
+User:
 
+* My orders (List of my orders)
+* See order details
+* Track order status
+* Pay order
+* See order price
 
+Admin:
+
+* Orders (List of all orders with live search)
+* Accept Order
+* Decline Order
+* Complete Order
+* See order details
+* See storage availability for order
+* See Users list
+* See Storage list
+* Add Storage
+* Edit Storage
+* Delete Storage (Just to showcase delete option)

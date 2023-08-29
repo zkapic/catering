@@ -21,6 +21,7 @@
                 <th>City</th>
                 <th>Location</th>
                 <th>Guest</th>
+                <th>Price</th>
                 <th>Date</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -32,6 +33,7 @@
                     <td><a href="{% url 'order_detail' order.id %}">{{ order.city }}</a></td>
                     <td>{{ order.location }}</td>
                     <td>{{ order.guests }}</td>
+                    <td>{{ order.total_price }} BAM</td>
                     <td>{{ order.date }}</td>
                     <td>{{ order.get_status_display }}</td>
                     <td>

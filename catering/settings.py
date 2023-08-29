@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_yasg',
     'users',
     'orders',
     'storage',
@@ -142,3 +144,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 # static files from /static/ on our deployment
 STATIC_ROOT = os.path.join(
     BASE_DIR, 'staticfiles', 'static')
+
+SWAGGER_SETTINGS = {
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'drf_yasg.inspectors.SwaggerAutoSchema',
+}
