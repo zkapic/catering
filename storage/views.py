@@ -37,7 +37,7 @@ def index(request):
 
 # Swagger documentation for the add view
 @swagger_auto_schema(
-    methods=['GET', 'POST'],
+    method='POST',
     operation_description="Add a new storage item.",
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
