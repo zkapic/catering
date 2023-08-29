@@ -37,7 +37,7 @@ def index(request):
 
 # Swagger documentation for the add view
 @swagger_auto_schema(
-    method='POST',
+    methods=['GET', 'POST'],
     operation_description="Add a new storage item.",
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
@@ -56,7 +56,7 @@ def index(request):
     }
 )
 @login_required
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @login_required
 def add(request):
     if request.method == 'POST':

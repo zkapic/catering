@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 from orders.models import Order
 
-@api_view(['POST'])  # Specify the HTTP methods for the view
+@api_view(['GET', 'POST'])
 @swagger_auto_schema(
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
@@ -50,7 +50,7 @@ def login_view(request):
 
 from .forms import CustomUserCreationForm  # Import your custom form
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @swagger_auto_schema(
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
