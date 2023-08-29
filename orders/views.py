@@ -132,6 +132,17 @@ def pay(request, order_id):
 def order_detail(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     order_storage_items = order.orderstorage_set.all().prefetch_related('storage')
+
+    orders = Order.objects.exclude(id=order_id)  # Get all orders except the current order
+
+    for order_storage in order_storage_items:
+        total_used_quantity = 0
+        for other_order in orders:
+            for storage_item in other_order.orderstorage_set.all():
+                if storage_item.storage.id == order_storage.storage.id:
+                    total_used_quantity += storage_item.quantity
+        remaining_quantity = int(order_storage.storage.quantity) - total_used_quantity
+        order_storage.remaining_quantity = remaining_quantity if remaining_quantity >= 0 else 0
     
     return render(request, 'orders/order_detail.html', {
         'order': order,

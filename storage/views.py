@@ -51,3 +51,10 @@ def edit_storage(request, storage_id):
         return redirect('edit', storage_id=storage_id)  # Correct redirection
     
     return render(request, 'storage/edit.html', {'storage': storage})
+
+@login_required
+def delete_storage(request, storage_id):
+    storage = Storage.objects.get(id=storage_id)
+    
+    storage.delete()
+    return redirect('storage')

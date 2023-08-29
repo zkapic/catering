@@ -32,6 +32,7 @@
                 <li>
                     <span class="font-semibold">{{ order_storage.storage.name }}</span>
                     <span class="text-gray-600 ml-2">(Quantity: {{ order_storage.quantity }})</span>
+                    <span class="text-green-600 ml-2">(Remaining: {{ order_storage.remaining_quantity }})</span>
                 </li>
             {% endfor %}
         </ul>

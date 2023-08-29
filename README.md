@@ -18,9 +18,6 @@ Still in To Do:
 
 * Edit order and storage details for order (Admin and User)
 * See free storage before Accepting order (Admin)
-* Delete Storage
-* Deactivate Users
-* Display Stats and Finances on Homepage
 
 
 
