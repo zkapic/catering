@@ -105,7 +105,7 @@ def add(request):
 
 # Swagger documentation for the approve view
 @swagger_auto_schema(
-    method='POST',
+    method='GET',
     operation_description="Approve an order.",
     responses={
         200: "Order approved successfully",
@@ -113,7 +113,7 @@ def add(request):
     }
 )
 @login_required
-@api_view(['POST'])
+@api_view(['GET'])
 @login_required
 def approve(request, order_id):
     try:
@@ -128,7 +128,7 @@ def approve(request, order_id):
 
 # Swagger documentation for the decline view
 @swagger_auto_schema(
-    method='POST',
+    method='GET',
     operation_description="Decline an order.",
     responses={
         200: "Order declined successfully",
@@ -136,7 +136,7 @@ def approve(request, order_id):
     }
 )
 @login_required
-@api_view(['POST'])
+@api_view(['GET'])
 @login_required
 def decline(request, order_id):
     try:
@@ -151,7 +151,7 @@ def decline(request, order_id):
 
 # Swagger documentation for the whitdraw view
 @swagger_auto_schema(
-    method='POST',
+    method='GET',
     operation_description="Withdraw an order.",
     responses={
         200: "Order withdrawn successfully",
@@ -159,7 +159,7 @@ def decline(request, order_id):
     }
 )
 @login_required
-@api_view(['POST'])
+@api_view(['GET'])
 @login_required
 def whitdraw(request, order_id):
     try:
@@ -174,7 +174,7 @@ def whitdraw(request, order_id):
 
 # Swagger documentation for the complete view
 @swagger_auto_schema(
-    method='POST',
+    method='GET',
     operation_description="Mark an order as complete.",
     responses={
         200: "Order marked as complete successfully",
@@ -182,7 +182,7 @@ def whitdraw(request, order_id):
     }
 )
 @login_required
-@api_view(['POST'])
+@api_view(['GET'])
 def complete(request, order_id):
     try:
         order = Order.objects.get(id=order_id)
